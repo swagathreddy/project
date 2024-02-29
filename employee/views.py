@@ -32,7 +32,9 @@ def register_user(request):
                     login = Login.objects.create(email=email, password=password)
                 return redirect('login_register')  # Redirect to login page after successful registration
             except IntegrityError:
-                return render(request, 'login_register.html', {'error': 'Email already exists'})
+                print("hello")
+                messages.error(request, 'Already account exists.please login')
+                return redirect('login_register')
         else:
             return render(request, 'login_register.html', {'error': 'Passwords do not match'})
 
@@ -57,14 +59,17 @@ def login_user(request):
                 return redirect('index')  # Redirect to home page after successful login
             else:
                 # Passwords don't match
+                print("hello")
                 messages.error(request, 'Invalid username or password. Please try again.')
                 return redirect('login_register')
         else:
             # User not found
+            print("hello")
             messages.error(request, 'User does not exist')
+            return render(request,'login_register.html')
             
     
-        return render(request, 'index.html')
+        
     return HttpResponse(status=405)
     
 def logout(request):
