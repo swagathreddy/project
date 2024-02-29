@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in & Sign up Form</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <nav>
+    <div class="logo"><img src="{% static 'media/AU-logo.svg' %}" alt="logo"></div>
+    <div id="menu-bar" class="menu-icon">
+      <div class="bar"><a href="{% url 'index' %}">Home</a></div>
+      {% if request.user.is_authenticated %}
+      <div class="bar"><span>Welcome, {{ username }}</span></div>
+      <div class="bar"><a href="{% url 'logout' %}">Logout</a></div>
+    {% else %}
+      <div class="bar"><a href="{% url 'login_register' %}">Login</a></div>
+      <div class="bar"><a href="{% url 'login_register' %}">Register</a></div>
+    {% endif %}
+    </div>
+  </nav>
+
+  <div class="construction">
+    <div class="constr-left">
+      <h2>Website is</h2>
+      <h1>under construction</h1>
+    </div>
+    <img src="{% static 'media/constr.png' %}" alt="under-construction">
+  </div>
+
+  <aside class="menu">
+    <i class="fa-solid fa-xmark" id="cross" onclick="closemenu()"></i>
+    <a href="{% url 'index' %}">Home</a>
+    {% if request.user.is_authenticated %}
+      <span>Welcome, {{ username }}</span>
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login_register' %}">Login</a>
+      <a href="{% url 'login_register' %}">Register</a>
+    {% endif %}
+  </aside>
+
+  <div class="container">
+    <!-- Login & Register forms are in a separate page -->
+    <a href="{% url 'login_register' %}" class="btn">Login / Register</a>
+  </div>
+
+  <script>
+    const menuBar = document.querySelector("#menu-bar");
+    const menuIconBars = document.querySelectorAll(".bar");
+    const menu = document.querySelector(".menu");
+
+    // Open and close menu
+    function toggleMenu() {
+      menu.classList.toggle("open");
+      menuIconBars.forEach(bar => bar.classList.toggle("change"));
+    }
+
+    // Redirect to login_register page when clicking Login / Register button
+    container.addEventListener("click", () => {
+      window.location.href = "{% url 'login_register' %}";
+    });
+
+    // Toggle menu visibility when clicking the menu icon
+    menuBar.addEventListener("click", toggleMenu);
+
+    // Close menu when clicking outside the menu
+    window.addEventListener("click", event => {
+      if (!menu.contains(event.target) && !menuBar.contains(event.target)) {
+        menu.classList.remove("open");
+        menuIconBars.forEach(bar => bar.classList.remove("change"));
+      }
+    });
+  </script>
+</body>
+</html>
