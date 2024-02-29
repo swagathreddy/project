@@ -98,7 +98,7 @@ input {
   transform: translate(-50%,-50%);
   width: 70%;
   background-color: #fff;
-  min-height: 75vh;
+  min-height: 90vh;
   overflow: hidden;
   border-radius: 6rem;
   box-shadow: 5px 5px 30px black;
@@ -216,6 +216,7 @@ form.sign-in-form {
   text-decoration: none;
   font-size: 1.1rem;
   transition: 0.3s;
+  display: none;
 }
 
 .social-icon:hover {
@@ -288,7 +289,9 @@ form.sign-in-form {
 
 .right-panel {
   pointer-events: none;
-  padding: 3rem 12% 2rem 17%;
+  padding: 3rem 2rem 2rem 17%;
+  display: grid;
+  align-items: center;
 }
 
 .panel .content {
@@ -526,7 +529,15 @@ a:hover
             </div>
             <input type="submit" value="Login" class="btn solid" />
             <a href="{% url 'password_reset' %}">Forgot password?</a>
-            <p class="social-text">Or Sign in with social platforms</p>
+            {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          
+            <!-- <p class="social-text">Or Sign in with social platforms</p>
             <div class="social-media">
               <a href="#" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
@@ -540,7 +551,7 @@ a:hover
               <a href="#" class="social-icon">
                 <i class="fab fa-linkedin-in"></i>
               </a>
-            </div>
+            </div> -->
           </form>
           <form action="{% url 'register' %}" class="sign-up-form" method="post">
             {% csrf_token %}
@@ -566,7 +577,7 @@ a:hover
               <input type="password" placeholder="Confirm Password" name="confirm_password" required/>
             </div>
             <input type="submit" class="btn" value="Sign up" />
-            <p class="social-text">Or Sign up with social platforms</p>
+            <!-- <p class="social-text">Or Sign up with social platforms</p>
             <div class="social-media">
               <a href="#" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
@@ -579,8 +590,8 @@ a:hover
               </a>
               <a href="#" class="social-icon">
                 <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
+              </a> 
+            </div>-->
           </form>
         </div>
     
@@ -593,8 +604,7 @@ a:hover
           <div class="content">
             <h3>New here ?</h3>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-              ex ratione. Aliquid!
+              Sign up to create a new account
             </p>
             <button class="btn transparent" id="sign-up-btn">
               Sign up
@@ -607,8 +617,7 @@ a:hover
             <h2 id="close" onclick="closecont()">&times;</h2>
             <h3>One of us ?</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-              laboriosam ad deleniti.
+              Sign in 
             </p>
             <button class="btn transparent" id="sign-in-btn">
               Sign in
@@ -618,14 +627,7 @@ a:hover
         </div>
       </div>
     </div>
-    {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-{% endif %}
-
+ 
     <script>
         const sign_in_btn = document.querySelector("#sign-in-btn");
 const sign_up_btn = document.querySelector("#sign-up-btn");
@@ -644,6 +646,7 @@ sign_in_btn.addEventListener("click", () => {
 });
 function closecont(){
   container.style.display="none";
+  window.location.href = "index.html";
 }
     </script>
   </body>
